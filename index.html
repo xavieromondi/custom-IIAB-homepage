@@ -1,28 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
-  <!-- CHANGED: Added lang attribute for accessibility -->
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AccessHub | Internet in a Box</title>
-    <!-- CHANGED: New title branding -->
 
-    <!-- Bootstrap and FontAwesome -->
+    <!-- Bootstrap -->
     <link rel="stylesheet" href="/common/css/bootstrap4.min.css" />
-    <link rel="stylesheet" href="/common/css/fa.all.min.css" />
-    <!-- REMOVED: js-menu, star-rating, font-faces stylesheets -->
 
-    <!-- Custom Styles -->
     <style>
-      /* CHANGED: Added minimal custom styling directly in the <head> */
-
       body {
-        font-family: "Segoe UI", sans-serif; /* NEW FONT */
-        background-color: #f9f9f9; /* Clean light background */
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f9f9f9;
+        margin: 0;
       }
 
       header {
-        background-color: #1d3557; /* NEW: Dark blue theme */
+        background-color: #1d3557;
         color: white;
         padding: 1rem;
         display: flex;
@@ -45,49 +39,51 @@
         font-weight: bold;
       }
 
-      .search-icon {
-        font-size: 1.5rem;
-        cursor: pointer;
-      }
-
       main {
         padding: 2rem;
       }
 
-      /* NEW: Responsive card layout using CSS Grid */
-      .card-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
+      .menu-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: flex-start;
       }
 
-      .card {
-        background: white;
+      .menu-item {
+        width: 180px;
+        height: 180px;
+        background: #fff;
         border-radius: 12px;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        padding: 1.5rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
         text-align: center;
-        transition: transform 0.2s;
+        transition: transform 0.2s, box-shadow 0.2s;
       }
 
-      .card:hover {
+      .menu-item:hover {
         transform: translateY(-5px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
       }
 
-      .card i {
-        font-size: 2.5rem;
-        margin-bottom: 1rem;
-        color: #457b9d;
+      .menu-item img {
+        width: 80px;
+        height: auto;
+        margin-bottom: 10px;
       }
 
-      .card-title {
-        font-size: 1.2rem;
+      .menu-item span {
+        font-size: 1rem;
         font-weight: 600;
         color: #1d3557;
+        word-wrap: break-word;
       }
 
       footer {
-        margin-top: 3rem;
+        margin-top: 2rem;
         text-align: center;
         font-size: 0.9rem;
         color: #888;
@@ -106,63 +102,108 @@
         .logo img {
           margin: 0 0 10px 0;
         }
+        .menu-item {
+          width: 45%;
+          height: 150px;
+        }
       }
     </style>
   </head>
-
   <body>
-    <!-- CHANGED: Simplified header (removed mobile/desktop split + hamburger menu) -->
     <header>
       <div class="logo">
         <img
-        src="https://accesshub-africa.com/wp-content/uploads/2023/02/aha-logo_white_text_transparent_-1024x416.png"
-        alt="AccessHub Logo"
-        <!-- CHANGED: Added alt text for accessibility -->
-
+          src="https://accesshub-africa.com/wp-content/uploads/2023/02/aha-logo_white_text_transparent_-1024x416.png"
+          alt="AccessHub Logo"
+        />
         <span>AccessHub | Internet in a Box</span>
-      </div>
-      <div class="search-icon">
-        <i class="fas fa-search"></i>
-        <!-- CHANGED: Replaced custom search form with icon only -->
       </div>
     </header>
 
     <main>
-      <!-- NEW: Modern, mobile-friendly card layout -->
-      <div class="card-grid">
-        <div class="card">
-          <i class="fas fa-book"></i>
-          <div class="card-title">Wikipedia</div>
-        </div>
-        <div class="card">
-          <i class="fas fa-flask"></i>
-          <div class="card-title">Science Resources</div>
-        </div>
-        <div class="card">
-          <i class="fas fa-globe"></i>
-          <div class="card-title">World Atlas</div>
-        </div>
-        <div class="card">
-          <i class="fas fa-chalkboard-teacher"></i>
-          <div class="card-title">Khan Academy</div>
-        </div>
-        <div class="card">
-          <i class="fas fa-book-reader"></i>
-          <div class="card-title">eBooks</div>
-        </div>
-        <div class="card">
-          <i class="fas fa-code"></i>
-          <div class="card-title">Coding for Kids</div>
-        </div>
-        <!-- EXTENDABLE: Add more cards as needed -->
-      </div>
+      <div class="menu-grid" id="menuGrid"></div>
     </main>
 
-    <!-- CHANGED: Simplified footer -->
     <footer>Powered by AHAINNOVATE Internet-in-a-Box</footer>
 
-    <!-- CHANGED: Only essential scripts kept -->
     <script src="/common/js/jquery.min.js"></script>
     <script src="/common/js/bootstrap4.min.js"></script>
+
+    <script>
+      const iconMap = {
+        "en-oob":
+          "http://134.209.113.217/js-menu/menu-files/images/OOBlayout.svg.png",
+        "en-sample":
+          "http://134.209.113.217/js-menu/menu-files/images/Sample.svg.png",
+        "en-test_zim":
+          "http://134.209.113.217/js-menu/menu-files/images/KiwixLogoVertical2.svg.png",
+        "en-test_mod":
+          "http://134.209.113.217/js-menu/menu-files/images/200px-Icon-round-Question_mark.svg.png",
+        "en-map_admin":
+          "http://134.209.113.217/js-menu/menu-files/images/osm.jpg",
+        "en-osm_viewer_v2":
+          "http://134.209.113.217/js-menu/menu-files/images/osm.jpg",
+        "en-usb":
+          "http://134.209.113.217/js-menu/menu-files/images/1804363.png",
+        "en-nextcloud":
+          "http://134.209.113.217/js-menu/menu-files/images/nextcloud.png",
+        "en-wordpress":
+          "http://134.209.113.217/js-menu/menu-files/images/wordpress-icon3.png",
+        "en-kolibri":
+          "http://134.209.113.217/js-menu/menu-files/images/kolibri.png",
+        "en-moodle":
+          "http://134.209.113.217/js-menu/menu-files/images/moodle-logo.png",
+        "en-calibreweb":
+          "http://134.209.113.217/js-menu/menu-files/images/calibreweb.png",
+        "en-credits":
+          "http://134.209.113.217/js-menu/menu-files/images/credits.png",
+      };
+
+      function createMenuItem(item) {
+        const div = document.createElement("div");
+        div.className = "menu-item";
+        div.innerHTML = `
+          <a href="${
+            item.url || "#"
+          }" style="text-decoration:none; color:inherit;">
+            <img src="${item.icon}" alt="${item.title}" />
+            <span>${item.title}</span>
+          </a>
+        `;
+        return div;
+      }
+
+      async function loadMenu() {
+        let menuData;
+        try {
+          const res = await fetch("menu.json");
+          if (!res.ok) throw new Error("Menu JSON not found");
+          menuData = await res.json();
+        } catch (err) {
+          console.error("Error loading menu.json:", err);
+          document.getElementById("menuGrid").innerHTML = `
+            <p style="color:#888; text-align:center;">
+              Unable to load menu — please check connection.
+            </p>
+          `;
+          return;
+        }
+
+        const grid = document.getElementById("menuGrid");
+
+        menuData.menu_items_1.slice(2).forEach((key) => {
+          const item = {
+            title: key.replace(/^en-/, "").replace(/_/g, " "),
+            url: "#" + key,
+            icon:
+              iconMap[key] ||
+              "http://134.209.113.217/js-menu/menu-files/images/Folder.svg.png",
+          };
+          grid.appendChild(createMenuItem(item));
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", loadMenu);
+    </script>
   </body>
 </html>

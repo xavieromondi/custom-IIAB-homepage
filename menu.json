@@ -18,9 +18,7 @@
   "autoupdate_menu": true,
   "allow_server_time_update": true,
   "multi_tab": false,
-  "tab_names": [
-    "Main"
-  ],
+  "tab_names": ["Main"],
   "menu_items_1": [
     "en-oob",
     "en-sample",
